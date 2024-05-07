@@ -2,7 +2,7 @@
 -- create database if not exists  superDB;
 use superDB;
 
-create table Clientes( /* */
+create table Clientes(
 	clienteId int not null auto_increment,
     nombre varchar(30) not null,
     apellido varchar(30) not null,
@@ -12,13 +12,13 @@ create table Clientes( /* */
     primary key PK_clienteId (clienteId)
 );
  
-create table Cargos(   /* */
+create table Cargos(
 	cargoId int not null auto_increment,
     nombreCargo varchar(30),
     descripcionCargo varchar(100),
     primary key pk_cargoId(cargoId)
 );
-create table Empleados( /* */
+create table Empleados(
     empleadoId int not null auto_increment,
     nombreEmpleado varchar(30) not null,
     apellidoEmpleado varchar(30) not null,
@@ -48,7 +48,7 @@ create table Facturas(
         references Empleados(empleadoId)
 );
  
-create table TicketSporte(
+create table TicketSoporte(
 	ticketSoporteId int not null auto_increment,
     descripcionTicket varchar(250),
     estatus varchar(30) not null,
@@ -61,7 +61,7 @@ create table TicketSporte(
         references Facturas(facturaId)
 );
  
-create table Distribuidores( /* */
+create table Distribuidores(
 	distribuidorId int not null auto_increment,
 	nombreDistribuidor varchar(30) not null,
     direccionDistribuidor varchar(200) not null,
@@ -71,7 +71,7 @@ create table Distribuidores( /* */
     primary key pk_distribuidorId (distribuidorId)
 );
  
-create table CategoriaProductos( /* */
+create table CategoriaProductos(
 	categoriaProductoId int not null auto_increment,
     nombreCategoria varchar(30) not null,
     descripcionCategoria varchar(100) not null,
@@ -97,7 +97,7 @@ create table Productos(
 );
  
  
-create table Compras( /* */
+create table Compras(
 	compraId int not null auto_increment,
     fechaCompra date not null,
     totalCompra decimal(10,2),

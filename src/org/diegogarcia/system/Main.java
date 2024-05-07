@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import org.diegogarcia.controller.MenuAgregarClienteController;
 import org.diegogarcia.controller.MenuPrincipalController;
 import org.diegogarcia.controller.MenuClientesController;
+import org.diegogarcia.controller.MenuTicketController;
 
 
 /**
@@ -81,6 +82,15 @@ public class Main extends Application {
             formClienteView.setOp(op);
             formClienteView.setStage(this);
         }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void menuTicketView(){
+        try{
+            MenuTicketController menuTicketView = (MenuTicketController) switchScene("MenuTicketView.fxml", 1200, 750);
+            menuTicketView.setStage(this);
+        }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
