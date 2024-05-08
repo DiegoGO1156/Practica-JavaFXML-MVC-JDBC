@@ -60,7 +60,7 @@ public class MenuTicketController implements Initializable {
     TableView tb_Tick;
     
     @FXML 
-    TableColumn col_TicketId, col_Descri, col_Cliente, col_Estat, col_FacturaId;
+    TableColumn col_TicketId, col_Descri, col_Cliente, col_FacturaId;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -166,9 +166,9 @@ public class MenuTicketController implements Initializable {
        tb_Tick.setItems(listarTickets());
        col_TicketId.setCellFactory(new PropertyValueFactory<TicketSoporte, Integer>("ticketSoporteId")); 
        col_Descri.setCellFactory(new PropertyValueFactory<TicketSoporte, String>("descripcion")); 
-       col_Estat.setCellFactory(new PropertyValueFactory<TicketSoporte, String>("estatus")); 
-       col_Cliente.setCellFactory(new PropertyValueFactory<TicketSoporte, String>("cliente")); 
-       col_FacturaId.setCellFactory(new PropertyValueFactory<TicketSoporte, Integer>("facturaId")); 
+       col_Descri.setCellFactory(new PropertyValueFactory<TicketSoporte, String>("estatus")); 
+       col_Descri.setCellFactory(new PropertyValueFactory<TicketSoporte, String>("cliente")); 
+       col_Descri.setCellFactory(new PropertyValueFactory<TicketSoporte, Integer>("facturaId")); 
    }
    
    public void cargarCmbEstatus(){
@@ -204,7 +204,9 @@ public class MenuTicketController implements Initializable {
                 index = i;
                 break;
             }
+        
        }
+       
        return index;
    }
    
@@ -241,51 +243,22 @@ public class MenuTicketController implements Initializable {
            String sql = "call sp_editarTicketSoporte(?,?,?,?,?)";
            statement = conexion.prepareStatement(sql);
            
-           statement.setInt(1, Integer.parseInt(tf_TicketId.getText()));
-           statement.setString(2, ta_Desc.getText());
-           statement.setString(3, (cmb_Estatus.getSelectionModel().toString()));
-           statement.setInt(4, ((Cliente)cmb_Cliente.getSelectionModel().getSelectedItem()).getClienteId());
-           statement.setInt(5, Integer.parseInt(cmb_Factura.getSelectionModel().getSelectedItem().toString()));
-           statement.execute();
-           
            
        }catch (SQLException e){
            System.out.println(e.getMessage());
        }finally{
-           try{
-               if(statement != null){
-                   statement.close();
-               }
-               if(conexion != null){
-                   conexion.close();
-               }
-           }catch(Exception e){
-               System.out.println(e.getMessage());
-           }
+           
        }
-   }
-   
-   public void varciarForm(){
-       tf_TicketId.clear();
-       ta_Desc.clear();
-       cmb_Estatus.getSelectionModel().clearSelection();
-       cmb_Cliente.getSelectionModel().clearSelection();
-       cmb_Factura.getSelectionModel().clearSelection();
    }
     
     public void handleButtonAction(ActionEvent event){
         if(event.getSource() == BTN_regresar){
             stage.menuPrincipalView();
         } else if(event.getSource() == BTN_Guardado){
-            if(tf_TicketId.getText().equals("")){
-                agregarTickets();
-                cargarDatos();
-            }else{
-                editarTickets();
-                cargarDatos();
-            } 
+            agregarTickets();
+            cargarDatos();
         }else if(event.getSource() == BTN_Vaciado){
-            varciarForm();
+            
         }
     }
     

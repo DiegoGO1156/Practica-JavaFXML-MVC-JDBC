@@ -48,7 +48,7 @@ create table Facturas(
         references Empleados(empleadoId)
 );
  
-create table TicketSporte(
+create table TicketSoporte(
 	ticketSoporteId int not null auto_increment,
     descripcionTicket varchar(250),
     estatus varchar(30) not null,

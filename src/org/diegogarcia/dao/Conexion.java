@@ -32,8 +32,8 @@ public class Conexion {
     }
     
     private String jdbcURL = "jdbc:mysql://localhost:3306/superDB?serverTimezone=GMT-6&useSSL=false";
-    private String user = "root";
-    private String password = "admin";
+    private String user = "diegoGarcia";
+    private String password = "159632102Dg";
     
     public Connection obtenerConexion() throws SQLException{
         return DriverManager.getConnection(jdbcURL, user, password);

@@ -284,13 +284,13 @@ delimiter ;
 
 call sp_ListarClientes();
 
--- %%%%%%%%%%%%%%%%%%%%%%%% CRUD de Productos %%%%%%%%%%%%%%%%%%%%%%%% --
+-- ======================== Crud de Productos ======================== --
 
 Delimiter $$
-Create Procedure sp_agregarProducto(in nomProd varchar(50),in descProd varchar(100), in cantSto int, in preVenUnit decimal(10, 2), in preVenMay DECIMAL(10,2), in precioCompra decimal(10, 2))
+Create Procedure sp_agregarProducto(in nomProd varchar(50),in descProd varchar(100), in cantSto int, in preVenUnit decimal(10, 2), in preVenMay decimal(10,2), in precioCompra decimal(10, 2), in imagProd blob, in distriId int, in categoProdId int)
 	Begin
-		insert into Productos(nombreProducto,descripcionProducto, cantidadStock, precioVentaUnitario, precioVentaMayor,precioCompra) values
-			(nomProd, descProd, cantSto, preVenUnit, preVenMay, precioCompra);
+		insert into Productos(nombreProducto,descripcionProducto, cantidadStock, precioVentaUnitario, precioVentaMayor,precioCompra, imagenProducto, distribuidorId, categoriaProductoId) values
+			(nomProd, descProd, cantSto, preVenUnit, preVenMay, precioCompra, imagProd, distriId, categoProdId);
 	End$$
 Delimiter ;
 
@@ -304,7 +304,10 @@ Create Procedure sp_listarProducto()
             Productos.cantidadStock,
             Productos.precioVentaUnitario,
             Productos.precioVentaMayor,
-            Productos.precioCompra
+            Productos.precioCompra,
+            Productos.imagenProducto,
+            Productos.distribuidorId,
+            Productos.categoriaProductosId
 				From Productos;
 	End$$
 Delimiter ;
@@ -327,14 +330,17 @@ Create Procedure sp_buscarProducto(in prodcId int)
             Productos.cantidadStock,
             Productos.precioVentaUnitario,
             Productos.precioVentaMayor,
-            Productos.precioCompra
+            Productos.precioCompra,
+            Productos.imagenProducto,
+            Productos.distribuidorId,
+            Productos.categoriaProductoId
 				From Productos
 					Where productoId = prodcId;
 	End$$
 Delimiter ;
              
 Delimiter $$
-Create Procedure sp_editarProducto(in prodcId int,in nomProd varchar(50),in descProd varchar(100), in cantSto INT, in preVenUnit DECIMAL(10,2), in preVenMay DECIMAL(10,2), precioCompra DECIMAL(10,2))
+Create Procedure sp_editarProducto(in nomProd varchar(50),in descProd varchar(100), in cantSto INT, in preVenUnit decimal(10,2), in preVenMay decimal(10,2), precioCompra decimal(10,2), imagProd blob, in distriId int, in categoProdId int)
 	Begin
 		Update Productos
 			Set
@@ -343,7 +349,10 @@ Create Procedure sp_editarProducto(in prodcId int,in nomProd varchar(50),in desc
                 cantidadStock = cantSto,
                 precioVentaUnitario = preVenUnit,
                 precioVentaMayor =preVenMay,
-                precioCompra = precioCompra
+                precioCompra = precioCompra,
+                Productos = imagenProducto,
+                Productos = distribuidorId,
+				Productos = categoriaProductosId
 					Where productoId = prodcId;
 	End$$
 Delimiter ;

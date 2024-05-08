@@ -47,6 +47,12 @@ public class SuperKinalAlert {
            alert.setHeaderText("Campos Pendientes");
            alert.setContentText("Aún quedan campos necesiario se encuentran vacios!");
            alert.showAndWait(); 
+        }else if(code == 200){
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+           alert.setTitle("Campos llenos");
+           alert.setHeaderText("Campos llenos");
+           alert.setContentText("Utilice el boton vaciar para realizar el registro");
+           alert.showAndWait();
         }
     }
     

@@ -17,9 +17,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.diegogarcia.controller.MenuAgregarClienteController;
+import org.diegogarcia.controller.FormCargoController;
 import org.diegogarcia.controller.MenuPrincipalController;
 import org.diegogarcia.controller.MenuClientesController;
 import org.diegogarcia.controller.MenuTicketController;
+import org.diegogarcia.controller.ProductoController;
 
 
 /**
@@ -90,6 +92,24 @@ public class Main extends Application {
         try{
             MenuTicketController menuTicketView = (MenuTicketController) switchScene("MenuTicketView.fxml", 1200, 750);
             menuTicketView.setStage(this);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void productoView(){
+        try{
+            ProductoController productoView = (ProductoController) switchScene("ProductoView.fxml", 1600, 850);
+            productoView.setStage(this);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void formCargosView(){
+        try{
+            FormCargoController formCargosView = (FormCargoController) switchScene("MenuCargoView.fxml", 500, 400);
+            formCargosView.setStage(this);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
