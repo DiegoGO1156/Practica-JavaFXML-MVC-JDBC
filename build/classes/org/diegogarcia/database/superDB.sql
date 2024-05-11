@@ -13,3 +13,6 @@ insert into Distribuidores(nombreDistribuidor, direccionDistribuidor,nitDistribu
 
 insert into CategoriaProductos(nombreCategoria, descripcionCategoria) values
 ('Comestibles','Son alimentos que se pueden compar para el consumo propio');
+
+insert into Compras(fechaCompra, totalCompra) values
+('2023-02-15', 156.25);

@@ -6,13 +6,13 @@ Use SuperDB;
 Delimiter $$
 Create Procedure sp_agregarCargo(in nomCarg varchar(30),in descripCarg varchar(100))
 	Begin
-		insert into Cargo(nombreCargo, descripcionCargo) values
+		insert into Cargos(nombreCargo, descripcionCargo) values
 			(nomCarg, descripCarg);
 	End$$
 Delimiter ;
 
 Delimiter $$
-Create Procedure sp_listarCargo()
+Create Procedure sp_listarCargos()
 	Begin
 		Select
 			Cargos.cargoId,
@@ -31,14 +31,14 @@ create procedure sp_eliminarCargo(in cargId int)
 Delimiter ;
 
 Delimiter $$
-Create Procedure sp_buscarCargo(in cargId int)
+create Procedure sp_buscarCargo(in cargId int)
 	Begin
 		Select
             Cargos.cargoId,
             Cargos.nombreCargo,
             Cargos.descripcionCargo
 				From Cargos
-					Where Cargos = cargId;
+					Where cargoId = cargId;
 	End$$
 Delimiter ;
              
@@ -431,12 +431,9 @@ Delimiter ;
 Delimiter $$
 Create Procedure sp_listarDetalleCompra()
 	Begin
-		Select
-			DetalleCompras.detalleCompraId,
-            DetalleCompras.cantidadCompra,
-            DetalleCompras.productoId,
-            DetalleCompras.compraId
-				From DetalleCompras;
+		Select DTC.detalleCompraId, 
+				concat('Id: ',P.productoId, ' | ' , P.nombreProducto) AS 'Producto' from DetalleCompra DTC
+            Join Productos P on DTC.detalleCompraId = P.productoId;
 	End$$
 Delimiter ;
 

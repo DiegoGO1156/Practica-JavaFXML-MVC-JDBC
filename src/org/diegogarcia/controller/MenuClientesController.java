@@ -115,7 +115,7 @@ public class MenuClientesController implements Initializable {
                     conexion.close();
                 }
             }catch (Exception e){
-                
+                System.out.println(e.getMessage());
             }
         }
         

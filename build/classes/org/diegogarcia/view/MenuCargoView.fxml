@@ -1,29 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.diegogarcia.controller.MenuCargoController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.diegogarcia.controller.MenuCargoController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="600.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/CargosMenu.png" />
+            <Image url="@../image/CargoMenu.png" />
          </image>
       </ImageView>
-      <TextField fx:id="tf_CargId" editable="false" layoutX="263.0" layoutY="105.0" prefHeight="30.0" prefWidth="189.0" />
-      <TextField fx:id="tf_CargNom" layoutX="263.0" layoutY="178.0" prefHeight="30.0" prefWidth="189.0" />
-      <TextArea fx:id="ta_cargDes" layoutX="263.0" layoutY="263.0" prefHeight="117.0" prefWidth="200.0" wrapText="true" />
-      <Button layoutX="131.0" layoutY="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" style="-fx-background-radius: 15;" text="Button" />
-      <Button fx:id="button_Regresar" layoutX="28.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="19.0" prefWidth="93.0" style="-fx-background-color: #77779D;" text="Regresar">
+      <TableView fx:id="tbl_Cargo" layoutX="113.0" layoutY="230.0" prefHeight="318.0" prefWidth="379.0">
+        <columns>
+            <TableColumn fx:id="col_cargoId" minWidth="0.0" prefWidth="56.00000762939453" text="Cargo Id" />
+          <TableColumn fx:id="col_cargoNom" minWidth="0.0" prefWidth="136.0" text="Nombre Cargo" />
+          <TableColumn fx:id="col_cargoDesc" minWidth="0.0" prefWidth="218.39996337890625" text="Descripcion Cargo" />
+        </columns>
+      </TableView>
+      <Button fx:id="button_Editar" layoutX="20.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="61.0" style="-fx-background-color: #4771A3;" text="Editar" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="button_AgregarCarg" layoutX="20.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #4771A3;" text="Agregar" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="button_Buscar" layoutX="137.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="22.0" prefWidth="50.0" style="-fx-background-color: #4771A3;" text="🔎" textFill="WHITE" />
+      <TextField fx:id="tf_BuscarCargo" layoutX="189.0" layoutY="188.0" prefHeight="15.0" prefWidth="196.0" />
+      <Button fx:id="button_Regresar" layoutX="29.0" layoutY="69.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="26.0" prefWidth="84.0" style="-fx-background-color: #E7A8B1; -fx-background-radius: 15;" text="Regresar">
          <font>
             <Font size="9.0" />
          </font>
       </Button>
-      <Button layoutX="226.0" layoutY="15.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" style="-fx-background-radius: 15;" text="Button" />
+      <Button fx:id="button_Eliminar" layoutX="402.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #4771A3;" text="Eliminar" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

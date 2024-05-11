@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package org.diegogarcia.controller;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,22 +24,21 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.diegogarcia.dao.Conexion;
-import org.diegogarcia.dto.CargoDTO;
-import org.diegogarcia.model.Cargos;
+import org.diegogarcia.dto.DetalleComDTO;
+import org.diegogarcia.model.CompraDetalle;
 import org.diegogarcia.system.Main;
 import org.diegogarcia.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
  *
- * @author informatica
+ * @author diego
  */
-public class MenuCargoController implements Initializable {
+public class DetalleCompraController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
-    
     private static Connection conexion;
     private static PreparedStatement statement;
     private static ResultSet resultSet;
@@ -57,16 +57,16 @@ public class MenuCargoController implements Initializable {
     }
     
     @FXML
-    Button button_AgregarCarg, button_Editar, button_Eliminar, button_Buscar, button_Regresar;
+    Button button_Ag, button_Edit, button_Elimn, button_Busc, button_reg;
     
     @FXML
-    TextField tf_BuscarCargo;
+    TextField tf_Buscar;
     
     @FXML
-    TableView tbl_Cargo;
+    TableView tbl_DetalleComp;
     
     @FXML
-    TableColumn col_cargoNom, col_cargoDesc, col_cargoId;
+    TableColumn  col_DetalleCompId,col_CantComp, col_Prod, col_CompId;
     
     @Override
     public void initialize(URL url, ResourceBundle resources) {
@@ -75,31 +75,33 @@ public class MenuCargoController implements Initializable {
     
     public void cargarDatos(){
         if(op == 3){ 
-            tbl_Cargo.getItems().add(buscarCargo());
+            tbl_DetalleComp.getItems().add(buscarCompraDetalle());
             op = 0;
         }else {
-            tbl_Cargo.setItems(listarCargos());
+            tbl_DetalleComp.setItems(listarCompraDetalle());
         }
-        col_cargoId.setCellValueFactory(new PropertyValueFactory<Cargos, Integer> ("cargoId"));
-        col_cargoNom.setCellValueFactory(new PropertyValueFactory<Cargos, String> ("nombreCargo"));
-        col_cargoDesc.setCellValueFactory(new PropertyValueFactory<Cargos, String> ("descripcionCargo"));
+        col_DetalleCompId.setCellValueFactory(new PropertyValueFactory<CompraDetalle, Integer> ("detalleCompraId"));
+        col_CantComp.setCellValueFactory(new PropertyValueFactory<CompraDetalle, Integer> ("cantidadCompra"));
+        col_Prod.setCellValueFactory(new PropertyValueFactory<CompraDetalle, Integer> ("productoId"));
+        col_CompId.setCellValueFactory(new PropertyValueFactory<CompraDetalle, Integer> ("compraId"));
     }
     
-    public ObservableList<Cargos> listarCargos(){
-        ArrayList<Cargos> cargos = new ArrayList<>();
+    public ObservableList<CompraDetalle> listarCompraDetalle(){
+        ArrayList<CompraDetalle> CompraDetalle = new ArrayList<>();
         
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_listarCargos();";
+            String sql = "call sp_listarDetalleCompra();";
             statement = conexion.prepareStatement(sql);
             resultSet = statement.executeQuery();
             
             while(resultSet.next()){
-                int cargoId = resultSet.getInt("cargoId");
-                String nombreCargo = resultSet.getString("nombreCargo");
-                String descripcionCargo = resultSet.getString("descripcionCargo");
+                int detalleCompraId = resultSet.getInt("detalleCompraId");
+                int cantidadCompra = resultSet.getInt("cantidadCompra");
+                String producto = resultSet.getString("producto");
+                int compraId = resultSet.getInt("compraId");
                 
-                cargos.add(new Cargos(cargoId, nombreCargo, descripcionCargo));
+                CompraDetalle.add(new CompraDetalle(detalleCompraId, cantidadCompra, producto,  compraId));
             }
             
         }catch (SQLException e){
@@ -120,24 +122,26 @@ public class MenuCargoController implements Initializable {
             }
         }
         
-        return FXCollections.observableList(cargos);
+        return FXCollections.observableList(CompraDetalle);
     } 
     
-    public Cargos buscarCargo(){
-        Cargos cargos = null;
+    public CompraDetalle buscarCompraDetalle(){
+        CompraDetalle CompraDetalle = null;
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_buscarCargo(?);";
+            String sql = "call sp_buscarDetalleCompra(?);";
             statement = conexion.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(tf_BuscarCargo.getText()));
+            statement.setInt(1, Integer.parseInt(tf_Buscar.getText()));
             resultSet = statement.executeQuery();
             
             if(resultSet.next()){
-                int cargoId = resultSet.getInt("cargoId");
-                String nombreCargo = resultSet.getString("nombreCargo");
-                String descripcionCargo = resultSet.getString("descripcionCargo");
+                int detalleCompraId = resultSet.getInt("detalleCompraId");
+                int cantidadCompra = resultSet.getInt("nombreCargo");
+                String producto = resultSet.getString("producto");
+                int compraId = resultSet.getInt("nombreCargo");
                 
-                cargos = new Cargos(cargoId, nombreCargo, descripcionCargo);
+                
+                CompraDetalle = new CompraDetalle(detalleCompraId, cantidadCompra, producto,  compraId);
             }
             
         }catch(SQLException e ){
@@ -157,13 +161,13 @@ public class MenuCargoController implements Initializable {
                System.out.println(e.getMessage()); 
             }
         }
-        return cargos;
+        return CompraDetalle;
     }
     
-    public void eliminarCargos(int cargId){
+    public void eliminarCompraDetalle(int cargId){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_eliminarCargo(?);";
+            String sql = "call sp_eliminarDetalleCompra(?);";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, cargId);
             statement.execute();     
@@ -188,22 +192,22 @@ public class MenuCargoController implements Initializable {
     
     @FXML
     public void handleButtonAction(ActionEvent event){
-        if(event.getSource() == button_Regresar){
+        if(event.getSource() == button_reg){
             stage.menuPrincipalView();
-        } else if(event.getSource()== button_AgregarCarg){
-            stage.formCargosView(1);
-        } else if(event.getSource()== button_Editar){
-            CargoDTO.getCargoDTO().setCargos((Cargos)tbl_Cargo.getSelectionModel().getSelectedItem());
-            stage.formCargosView(2);
+        } else if(event.getSource()== button_Ag){
+            stage.formDetalleCompra(1);
+        } else if(event.getSource()== button_Edit){
+            DetalleComDTO.getDetalleComDTO().setCompraDetalle((CompraDetalle)tbl_DetalleComp.getSelectionModel().getSelectedItem());
+            stage.formDetalleCompra(2);
             cargarDatos();
-        }else if(event.getSource()== button_Eliminar){
+        }else if(event.getSource()== button_Elimn){
             if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(700).get() == ButtonType.OK){
-                eliminarCargos(((Cargos)tbl_Cargo.getSelectionModel().getSelectedItem()).getCargoId());
+                eliminarCompraDetalle(((CompraDetalle)tbl_DetalleComp.getSelectionModel().getSelectedItem()).getDetalleCompraId());
                 cargarDatos();
             }
-        }else if(event.getSource() == button_Buscar){
-            tbl_Cargo.getItems().clear();
-            if(tf_BuscarCargo.getText().equals("")){
+        }else if(event.getSource() == button_Busc){
+            tbl_DetalleComp.getItems().clear();
+            if(tf_Buscar.getText().equals("")){
                 cargarDatos();
             }else {
                 op = 3;

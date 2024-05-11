@@ -79,7 +79,6 @@ public class MenuAgregarClienteController implements Initializable {
             conexion = Conexion.getInstance().obtenerConexion();
             String sql = "call sp_AgregarClientes(?,?,?,?,?);";
             statement = conexion.prepareStatement(sql);
-            //resultSet = statement.executeQuery();
             
             statement.setString(1, tfNombre.getText());
             statement.setString(2, tfApellido.getText());
