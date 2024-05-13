@@ -20,9 +20,13 @@ import org.diegogarcia.controller.DetalleCompraController;
 import org.diegogarcia.controller.MenuAgregarClienteController;
 import org.diegogarcia.controller.FormCargoController;
 import org.diegogarcia.controller.FormDetalleCompraController;
+import org.diegogarcia.controller.FormPromocionesController;
+import org.diegogarcia.controller.FromDistribuidoresController;
 import org.diegogarcia.controller.MenuCargoController;
 import org.diegogarcia.controller.MenuPrincipalController;
 import org.diegogarcia.controller.MenuClientesController;
+import org.diegogarcia.controller.MenuDistribuidorController;
+import org.diegogarcia.controller.MenuPromocionesController;
 import org.diegogarcia.controller.MenuTicketController;
 import org.diegogarcia.controller.ProductoController;
 
@@ -144,6 +148,45 @@ public class Main extends Application {
             formDetalleCompra.setStage(this);
         }catch (Exception e){
            e.printStackTrace();
+        }
+    }
+    
+    public void menuPromociones(){
+        try{
+            MenuPromocionesController menuPromociones = (MenuPromocionesController)switchScene("MenuPromocionesView.fxml", 900,600);
+            menuPromociones.setStage(this);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void formPromociones(int op){
+        try{
+            FormPromocionesController formPromociones = (FormPromocionesController) switchScene("FormPromocionesView.fxml", 1000, 700);
+            formPromociones.setOp(op);
+            formPromociones.setStage(this);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuDistribuidorView(){
+        try{
+            MenuDistribuidorController menuDistribuidorView = (MenuDistribuidorController) switchScene("MenuDistribuidorView.fxml", 1200, 600);
+            menuDistribuidorView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void formDistribuidorView(int op){
+        try{
+            FromDistribuidoresController formDistribuidorView = (FromDistribuidoresController)switchScene("FromDistribuidores.fxml", 500, 800);
+            formDistribuidorView.setOp(op);
+            formDistribuidorView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
     }
 

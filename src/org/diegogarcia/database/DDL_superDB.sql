@@ -34,7 +34,7 @@ Create Table Compras(
     Primary key PK_compraId (compraId)
 );
 
-Create Table Clientes(
+Create Table Clientes( 
 	clienteId int not null auto_increment,
     nombre varchar(30) not null,
     apellido varchar(30) not null,
@@ -52,7 +52,7 @@ Create Table Productos(
     precioVentaUnitario decimal(10, 2) not null,
     precioVentaMayor decimal(10, 2) not null,
     precioCompra decimal(10, 2) not null,
-    imagenProducto blob,
+    imagenProducto Longblob,
     distribuidorId int not null,
     categoriaProductosId int not null,
     Primary Key PK_productoId(productoId),
@@ -74,7 +74,7 @@ Create Table Promociones(
 		References Productos(productoId)
 ); 
 
-Create Table DetalleCompra(
+Create Table DetalleCompra( 
 	detalleCompraId int not null auto_increment,
     cantidadCompra int not null,
     productoId int not null,

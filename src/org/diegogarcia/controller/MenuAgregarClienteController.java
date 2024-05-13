@@ -91,9 +91,6 @@ public class MenuAgregarClienteController implements Initializable {
             System.out.println(e.getMessage());              
         }finally{
             try{
-                if(resultSet != null){
-                    resultSet.close();
-                }
                 if(statement != null){
                     statement.close();
                 }
@@ -109,7 +106,7 @@ public class MenuAgregarClienteController implements Initializable {
     public void editarCliente(){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_EditarCliente(?,?,?,?,?,?);";
+            String sql = "call sp_editarClientes(?,?,?,?,?,?);";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, Integer.parseInt(tfID.getText()));
             statement.setString(2, tfNombre.getText());
@@ -131,7 +128,7 @@ public class MenuAgregarClienteController implements Initializable {
         }
     }
     
-    @FXML
+
     public void handleButtonAction(ActionEvent event){
         if(event.getSource() == button_Aceptar){
             if(op == 1){

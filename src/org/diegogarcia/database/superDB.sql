@@ -16,6 +16,6 @@ insert into CategoriaProductos(nombreCategoria, descripcionCategoria) values
 
 insert into Compras(fechaCompra, totalCompra) values
 	('2023-02-15', 156.25);
-
-insert into Productos(fechaCompra, totalCompra) values
-('2023-02-15', 156.25);
+    
+/*insert into Productos(nombreProducto, descripcionProducto, precioVentaUnitario, precioVentaMayor, precioCompra, ) values
+	('2023-02-15', 156.25);

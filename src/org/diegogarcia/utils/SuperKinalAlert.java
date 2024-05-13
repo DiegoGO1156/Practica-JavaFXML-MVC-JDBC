@@ -53,6 +53,12 @@ public class SuperKinalAlert {
            alert.setHeaderText("Campos llenos");
            alert.setContentText("Utilice el boton vaciar para realizar el registro");
            alert.showAndWait();
+        }else if(code == 100){
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+           alert.setTitle("El Registro Inexistente");
+           alert.setHeaderText("El Registro Inexistente");
+           alert.setContentText("El registro que intenta buscar no existe");
+           alert.showAndWait();
         }
     }
     

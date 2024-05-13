@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.diegogarcia.controller;
 
 import java.io.File;
@@ -147,7 +142,7 @@ public class ProductoController implements Initializable {
                    Double precioCompra = resultSet.getDouble("precioCompra"); 
                    Blob imagenProducto = resultSet.getBlob("imagenProducto"); 
                    Integer distribuidorId = resultSet.getInt("distribuidorId"); 
-                   Integer categoriaProductoId = resultSet.getInt("categoriaProductoId");
+                   Integer categoriaProductoId = resultSet.getInt("categoriaProductosId");
                    
                    producto = new Producto(nombreProducto, descripcionProducto, cantidadStock, precioVentaUnitario, precioVentaMayor, precioCompra, imagenProducto, distribuidorId, categoriaProductoId);
                 }
@@ -158,6 +153,31 @@ public class ProductoController implements Initializable {
             
         }
         return producto;
+    }
+    
+    public void eliminarProducto(int prodId){
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            String sql =  "call sp_eliminarProducto(?)";
+            statement = conexion.prepareStatement(sql);
+            statement.setInt(1, prodId);
+            statement.execute();
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(conexion != null){
+                    conexion.close();
+                }
+                if(statement != null){
+                    statement.close();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            
+        }
     }
     
     public void vaciarProd(){
@@ -190,10 +210,8 @@ public class ProductoController implements Initializable {
                     SuperKinalAlert.getInstance().mostrarAlertaInfo(600);
                     agregarProducto();
                 }
-            }else if(event.getSource() == button_editProd){
-
             }else if(event.getSource() == button_eliminarProd){
-
+                    eliminarProducto(Integer.parseInt(tf_ProdId.getText())); 
             }else if(event.getSource() == button_buscarProd){
                 Producto producto = buscarProducto();
                     if(producto != null){
@@ -208,6 +226,8 @@ public class ProductoController implements Initializable {
                         tf_ventMay.setText(Double.toString(producto.getPrecioVentaMayor()));
                         tf_preComp.setText(Double.toString(producto.getPrecioCompra()));
                         ta_DescProd.setText(producto.getDescripcionProducto());
+                }else if(producto == null){
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(100); 
                 }
             }
         }catch(SQLException e){

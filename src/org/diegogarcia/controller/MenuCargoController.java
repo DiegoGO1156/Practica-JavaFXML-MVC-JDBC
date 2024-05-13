@@ -90,7 +90,7 @@ public class MenuCargoController implements Initializable {
         
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_listarCargos();";
+            String sql = "call sp_listarCargo();";
             statement = conexion.prepareStatement(sql);
             resultSet = statement.executeQuery();
             

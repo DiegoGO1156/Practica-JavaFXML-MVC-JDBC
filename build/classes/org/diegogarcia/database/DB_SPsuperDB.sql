@@ -6,13 +6,13 @@ Use SuperDB;
 Delimiter $$
 Create Procedure sp_agregarCargo(in nomCarg varchar(30),in descripCarg varchar(100))
 	Begin
-		insert into Cargos(nombreCargo, descripcionCargo) values
+		insert into Cargo(nombreCargo, descripcionCargo) values
 			(nomCarg, descripCarg);
 	End$$
 Delimiter ;
 
 Delimiter $$
-Create Procedure sp_listarCargos()
+Create Procedure sp_listarCargo()
 	Begin
 		Select
 			Cargos.cargoId,
@@ -31,14 +31,13 @@ create procedure sp_eliminarCargo(in cargId int)
 Delimiter ;
 
 Delimiter $$
-create Procedure sp_buscarCargo(in cargId int)
+Create Procedure sp_buscarCargo(in cargId int)
 	Begin
 		Select
-            Cargos.cargoId,
             Cargos.nombreCargo,
             Cargos.descripcionCargo
 				From Cargos
-					Where cargoId = cargId;
+					Where cargId = cargId;
 	End$$
 Delimiter ;
              
@@ -86,7 +85,6 @@ Delimiter $$
 Create Procedure sp_buscarCategoriaProductos(in categoProdId int)
 	Begin
 		select
-            CategoriaProductos.categoriaProductosId,
             CategoriaProductos.nombreCategoria,
             CategoriaProductos.descripcionCategoria
 				From CategoriaProductos
@@ -141,7 +139,6 @@ Delimiter $$
 Create Procedure sp_buscarDistribuidores(in distriId int)
 	Begin
 		Select
-			Distribuidores.distribuidorId,
             Distribuidores.nombreDistribuidor,
             Distribuidores.direccionDistribuidor,
             Distribuidores.nitDistribuidor,
@@ -171,8 +168,8 @@ Delimiter ;
 Delimiter $$
 Create Procedure sp_agregarCompra(in fechCom DATE,in totalComp DECIMAL(10,2))
 	Begin
-		insert into Clientes(fechaCompra,totalCompra) values
-			(fechCom, nom, totalComp);
+		insert into Compras(fechaCompra,totalCompra) values
+			(fechCom, totalComp);
 	End$$
 Delimiter ;
 
@@ -202,7 +199,6 @@ Delimiter $$
 Create Procedure sp_buscarCompra(in compId int)
 	Begin
 		select
-			Compras.compraId,
             Compras.fechaCompra,
             Compras.totalCompra
 				from Compras
@@ -284,13 +280,13 @@ delimiter ;
 
 call sp_ListarClientes();
 
--- ======================== Crud de Productos ======================== --
+-- %%%%%%%%%%%%%%%%%%%%%%%% CRUD de Productos %%%%%%%%%%%%%%%%%%%%%%%% --
 
 Delimiter $$
-Create Procedure sp_agregarProducto(in nomProd varchar(50),in descProd varchar(100), in cantSto int, in preVenUnit decimal(10, 2), in preVenMay decimal(10,2), in precioCompra decimal(10, 2), in imagProd blob, in distriId int, in categoProdId int)
+Create Procedure sp_agregarProducto(in nomProd varchar(50),in descProd varchar(100), in cantSto int, in preVenUnit decimal(10, 2), in preVenMay DECIMAL(10,2), in preComp decimal(10, 2), in imgProd LongBlob, in distId int ,in categId int)
 	Begin
-		insert into Productos(nombreProducto,descripcionProducto, cantidadStock, precioVentaUnitario, precioVentaMayor,precioCompra, imagenProducto, distribuidorId, categoriaProductoId) values
-			(nomProd, descProd, cantSto, preVenUnit, preVenMay, precioCompra, imagProd, distriId, categoProdId);
+		insert into Productos(nombreProducto,descripcionProducto, cantidadStock, precioVentaUnitario, precioVentaMayor,precioCompra, imagenProducto, distribuidorId ,categoriaProductosId) values
+			(nomProd, descProd, cantSto, preVenUnit, preVenMay, preComp, imgProd, distId, categId);
 	End$$
 Delimiter ;
 
@@ -324,8 +320,7 @@ Delimiter $$
 Create Procedure sp_buscarProducto(in prodcId int)
 	Begin
 		Select
-			Productos.productoId,
-            Productos.nombreProducto,
+           Productos.nombreProducto,
             Productos.descripcionProducto,
             Productos.cantidadStock,
             Productos.precioVentaUnitario,
@@ -333,14 +328,14 @@ Create Procedure sp_buscarProducto(in prodcId int)
             Productos.precioCompra,
             Productos.imagenProducto,
             Productos.distribuidorId,
-            Productos.categoriaProductoId
+            Productos.categoriaProductosId
 				From Productos
 					Where productoId = prodcId;
 	End$$
 Delimiter ;
              
 Delimiter $$
-Create Procedure sp_editarProducto(in nomProd varchar(50),in descProd varchar(100), in cantSto INT, in preVenUnit decimal(10,2), in preVenMay decimal(10,2), precioCompra decimal(10,2), imagProd blob, in distriId int, in categoProdId int)
+Create Procedure sp_editarProducto(in prodcId int,in nomProd varchar(50),in descProd varchar(100), in cantSto INT, in preVenUnit decimal(10,2), in preVenMay decimal(10,2), precioCompra decimal(10,2), imagProd Longblob, in distriId int, in categoProdId int)
 	Begin
 		Update Productos
 			Set
@@ -350,9 +345,9 @@ Create Procedure sp_editarProducto(in nomProd varchar(50),in descProd varchar(10
                 precioVentaUnitario = preVenUnit,
                 precioVentaMayor =preVenMay,
                 precioCompra = precioCompra,
-                Productos = imagenProducto,
-                Productos = distribuidorId,
-				Productos = categoriaProductosId
+                imagenProducto = imagProd,
+                distribuidorId = distriId,
+				categoriaProductosId = categoProdId
 					Where productoId = prodcId;
 	End$$
 Delimiter ;
@@ -360,7 +355,7 @@ Delimiter ;
 -- %%%%%%%%%%%%%%%%%%%%%%%% CRUD de Promociones %%%%%%%%%%%%%%%%%%%%%%%% --
 
 Delimiter $$
-Create Procedure sp_agregarPromocion(in precPromo DECIMAL(10,2),in descPromo VARCHAR(100), in fechIn DATE, in fechFin DATE, in prodcId INT)
+Create Procedure sp_agregarPromocion(in precPromo DECIMAL(10,2),in descPromo VARCHAR(100), in fechIn DATE, in fechFin DATE, in prodId INT)
 	Begin
 		insert into Promociones(precioPromocion, descripcionPromocion, fechaInicio, fechaFinal, productoId) values
 			(precPromo, descPromo, fechIn, fechFin, prodId);
@@ -393,7 +388,6 @@ Delimiter $$
 Create Procedure sp_buscarPromocion(in promoId int)
 	Begin
 		select
-			Promociones.promocionId,
             Promociones.precioPromocion,
             Promociones.descripcionPromocion,
             Promociones.fechaInicio,
@@ -405,15 +399,15 @@ Create Procedure sp_buscarPromocion(in promoId int)
 Delimiter ;
              
 Delimiter $$
-Create Procedure sp_editarPromocion(in promoId int,in preProm decimal(10,2),in desProm varchar(100), in fecIn date, in fecFin date, in prodcId int)
+Create Procedure sp_editarPromocion(in promoId int,in precPromo decimal(10,2),in desProm varchar(100), in fecIn date, in fecFin date, in prodId int)
 	Begin
 		update Promociones
 			Set
-				precioPromocio = precPromo,
-				descripcionPromocion = descPromo,
-                fechaInicio = fechIn,
-                fechaFinal = fechFin,
-                productoId = prodcId
+				precioPromocion = precPromo,
+				descripcionPromocion = desProm,
+                fechaInicio = fecIn,
+                fechaFinal = fecFin,
+                productoId = prodId
 					Where promocionId = promoId;
 	End$$
 Delimiter ;
@@ -423,7 +417,7 @@ Delimiter ;
 Delimiter $$
 Create Procedure sp_agregarDetalleCompra(in cantiCom int,in prodcId int, in compId int)
 	Begin
-		insert into DetalleCompras(cantidadCompra, productoId, compraId) values
+		insert into DetalleCompra(cantidadCompra, productoId, compraId) values
 			(cantiCom, prodcId, compId);
 	End$$
 Delimiter ;
@@ -431,16 +425,19 @@ Delimiter ;
 Delimiter $$
 Create Procedure sp_listarDetalleCompra()
 	Begin
-		Select DTC.detalleCompraId, 
-				concat('Id: ',P.productoId, ' | ' , P.nombreProducto) AS 'Producto' from DetalleCompra DTC
-            Join Productos P on DTC.detalleCompraId = P.productoId;
+		Select
+			DetalleCompra.detalleCompraId,
+            DetalleCompra.cantidadCompra,
+            DetalleCompra.productoId,
+            DetalleCompra.compraId
+				From DetalleCompra;
 	End$$
 Delimiter ;
 
 Delimiter $$
 Create Procedure sp_eliminarDetalleCompra(in detaCompId int)
 	Begin 
-		Delete from DetalleCompras
+		Delete from DetalleCompra
 			Where detalleCompraId = detaCompId;
 	End$$
 Delimiter ;
@@ -449,11 +446,10 @@ Delimiter $$
 Create Procedure sp_buscarDetalleCompra(in detaCompId int)
 	Begin
 		Select
-			DetalleCompras.detalleCompraId,
-            DetalleCompras.cantidadCompra,
-            DetalleCompras.productoId,
-            DetalleCompras.compraId
-				From DetalleCompras
+            DetalleCompra.cantidadCompra,
+            DetalleCompra.productoId,
+            DetalleCompra.compraId
+				From DetalleCompra
 					Where detalleCompraId = detaCompId;
 	End$$
 delimiter ;
@@ -461,7 +457,7 @@ delimiter ;
 Delimiter $$
 Create Procedure sp_editarDetalleCompra(in detaCompId int,in cantiCom int,in prodcId int, in compId int)
 	Begin
-		Update DetalleCompras
+		Update DetalleCompra
 			Set
                 cantidadCompra = cantiCom,
                 productoId = prodcId,
@@ -506,7 +502,6 @@ Delimiter $$
 Create Procedure sp_buscarEmpleados(in empleId int)
 	Begin
 		Select
-			Empleados.distribuidorId,
             Empleados.nombreEmpleado,
             Empleados.apellidoEmpleado,
             Empleados.sueldo,
@@ -567,7 +562,6 @@ Delimiter $$
 Create Procedure sp_buscarFactura(in factId int)
 	Begin
 		Select
-			Facturas.facturaId,
             Facturas.fecha,
             Facturas.hora,
             Facturas.clienteId,
@@ -586,7 +580,7 @@ Create Procedure sp_editarFactura(in factId int,in fec date, in hor time, in cli
 				fecha = fec,
 				hora = hor,
                 clienteId = cliId,
-                empleadoId = empId,
+                empleadoId = empleId,
                 total = tot
 					Where facturaId = factId;
 	End $$
@@ -642,7 +636,7 @@ Create Procedure sp_editarTicketSoporte(in tickSoportId int,in desTic varchar(25
 					descripcionTicket = desTic,
 					estatus = est,
 					clienteId = cliId,
-					facturaId = factId
+					facturaId = facId
 						Where ticketSoporteId = tickSoportId;
 	End$$
 Delimiter ;
@@ -680,7 +674,6 @@ Delimiter $$
 Create Procedure sp_BuscarDetFacturas(in detaFactId int)
 	Begin
 			Select
-				DetalleFactura.detalleFacturaId,
 				DetalleFactura.facturaId,
 				DetalleFactura.productoId
 					From DetalleFactura
@@ -693,7 +686,6 @@ Create Procedure sp_EditarDetFacturas(IN detaFactId int,IN factId int, IN  prodc
 	Begin
 			Update DetalleFactura
 				Set
-				detalleFacturaId = detFacId,
 				facturaId = factId,
 				productoId = prodcId
 						Where detalleFacturaId = detaFactId;
