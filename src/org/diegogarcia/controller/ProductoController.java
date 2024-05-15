@@ -9,12 +9,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -23,6 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import org.diegogarcia.dao.Conexion;
+import org.diegogarcia.model.CategoriaProducto;
 import org.diegogarcia.model.Producto;
 import org.diegogarcia.system.Main;
 import org.diegogarcia.utils.SuperKinalAlert;
@@ -62,7 +67,10 @@ public class ProductoController implements Initializable {
     Button button_RegresarMenu, button_VaciarProd, button_AgProd, button_editProd, button_eliminarProd, button_buscarProd;
     
     @FXML
-    TextField  tf_DistriId, tf_CategProdId, tf_ProdId, tf_NomProd, tf_CantStock, tf_ventUni, tf_ventMay, tf_preComp;
+    TextField tf_ProdId, tf_NomProd, tf_CantStock, tf_ventUni, tf_ventMay, tf_preComp;
+    
+    @FXML
+    ComboBox cmb_Categoría, cmb_DIstribuidor;
     
     @FXML
     TextArea ta_DescProd;
@@ -103,8 +111,8 @@ public class ProductoController implements Initializable {
             statement.setDouble(6, Double.parseDouble(tf_preComp.getText()));
             InputStream img = new FileInputStream(files.get(0));
             statement.setBinaryStream(7, img);
-            statement.setInt(8, Integer.parseInt(tf_DistriId.getText()));
-            statement.setInt(9, Integer.parseInt(tf_CategProdId.getText()));
+            statement.setInt(8, ((cmb_Categoría.getSelectionModel()).getSelectedItem()));
+            statement.setInt(9, ((cmb_DIstribuidor.getSelectionModel()).getSelectedItem()));
             statement.execute();
             
         }catch(Exception e){
@@ -122,6 +130,43 @@ public class ProductoController implements Initializable {
             }
         }
     }
+    public ObservableList<CategoriaProducto> listarCategoriaProductos(){
+        ArrayList<CategoriaProducto> CategoriaProducto = new ArrayList<>();
+        
+        try{
+            conexion = Conexion.getInstance().obtenerConexion();
+            String sql = "call sp_listarCategoriaProductos();";
+            statement = conexion.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            
+            while(resultSet.next()){
+                int categoriaProductosId = resultSet.getInt("categoriaProductosId");
+                String nombreCategoria = resultSet.getString("nombreCategoria");
+                String descripcionCategoria = resultSet.getString("descripcionCategoria");
+                
+                CategoriaProducto.add(new CategoriaProducto(categoriaProductosId, nombreCategoria, descripcionCategoria));
+            }
+            
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                if(conexion != null){
+                    conexion.close();
+                }
+                if(statement != null){
+                    statement.close();
+                }
+                if(resultSet != null){
+                    resultSet.close();
+                }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        return FXCollections.observableList(CategoriaProducto);
+    } 
     
     public Producto buscarProducto(){
         Producto producto = null;
@@ -183,8 +228,6 @@ public class ProductoController implements Initializable {
     public void vaciarProd(){
         tf_NomProd.clear();
         tf_ProdId.clear();
-        tf_DistriId.clear();
-        tf_CategProdId.clear();
         tf_CantStock.clear();
         tf_ventUni.clear();
         tf_ventMay.clear();
@@ -202,7 +245,7 @@ public class ProductoController implements Initializable {
                 vaciarProd();
             }else if(event.getSource() == button_AgProd){
                 
-                if(tf_NomProd.getText().equals("") && tf_DistriId.getText().equals("") && tf_CategProdId.getText().equals("") && tf_CantStock.getText().equals("") && tf_ventUni.getText().equals("")&& tf_ventMay.getText().equals("") && tf_preComp.getText().equals("") && ta_DescProd.getText().equals("")){
+                if(tf_NomProd.getText().equals("") && tf_CantStock.getText().equals("") && tf_ventUni.getText().equals("")&& tf_ventMay.getText().equals("") && tf_preComp.getText().equals("") && ta_DescProd.getText().equals("")){
                     SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
                 }else if(!tf_ProdId.getText().equals("")){
                     SuperKinalAlert.getInstance().mostrarAlertaInfo(200);
@@ -219,8 +262,8 @@ public class ProductoController implements Initializable {
                         InputStream file = producto.getImagenProducto().getBinaryStream();
                         Image image = new Image(file);
                         img_CargarImg.setImage(image);
-                        tf_DistriId.setText(Integer.toString(producto.getDistribuidorId()));
-                        tf_CategProdId.setText(Integer.toString(producto.getCategoriaId()));
+                        cmb_DIstribuidor.setText(Integer.toString(producto.getDistribuidorId()));
+                        cmb_Categoría.setText(Integer.toString(producto.getCategoriaId()));
                         tf_CantStock.setText(Integer.toString(producto.getCantidadStock()));
                         tf_ventUni.setText(Double.toString(producto.getPrecioVentaUnitario()));
                         tf_ventMay.setText(Double.toString(producto.getPrecioVentaMayor()));

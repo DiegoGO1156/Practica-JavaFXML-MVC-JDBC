@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/diego/Downloads/AvanceBrutaldelProyecto%201/Practica-JavaFXML-MVC-JDBC/src/org/diegogarcia/controller/FormCargoController.java</file>
-            <file>file:/C:/Users/diego/Downloads/AvanceBrutaldelProyecto%201/Practica-JavaFXML-MVC-JDBC/src/org/diegogarcia/controller/MenuDistribuidorController.java</file>
-            <file>file:/C:/Users/diego/Downloads/AvanceBrutaldelProyecto%201/Practica-JavaFXML-MVC-JDBC/src/org/diegogarcia/controller/MenuCargoController.java</file>
+            <file>file:/C:/Users/diego/Downloads/AvanceBrutaldelProyecto%201/Practica-JavaFXML-MVC-JDBC/src/org/diegogarcia/model/CategoriaProducto.java</file>
+            <file>file:/C:/Users/diego/Downloads/AvanceBrutaldelProyecto%201/Practica-JavaFXML-MVC-JDBC/src/org/diegogarcia/dto/CategorasDTO.java</file>
+            <file>file:/C:/Users/diego/Downloads/AvanceBrutaldelProyecto%201/Practica-JavaFXML-MVC-JDBC/src/org/diegogarcia/controller/MenuCategoriaProductosController.java</file>
         </group>
     </open-files>
 </project-private>

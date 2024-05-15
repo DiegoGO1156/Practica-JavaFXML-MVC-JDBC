@@ -6,7 +6,7 @@ Use SuperDB;
 Delimiter $$
 Create Procedure sp_agregarCargo(in nomCarg varchar(30),in descripCarg varchar(100))
 	Begin
-		insert into Cargo(nombreCargo, descripcionCargo) values
+		insert into Cargos(nombreCargo, descripcionCargo) values
 			(nomCarg, descripCarg);
 	End$$
 Delimiter ;
@@ -106,7 +106,7 @@ Delimiter ;
 -- %%%%%%%%%%%%%%%%%%%%%%%% CRUD de Distribuidores %%%%%%%%%%%%%%%%%%%%%%%% --
 
 Delimiter $$
-Create Procedure sp_agregarDistribuidores(in nomDist varchar(30),in direDistri varchar(30), ntDistri decimal(10, 2), teleDistri time, wb time)
+Create Procedure sp_agregarDistribuidores(in nomDist varchar(30),in direDistri varchar(30), in direDistri varchar(30), ntDistri varchar(16), teleDistri varchar(15), wb varchar(50))
 	Begin
 		insert into Distribuidores(nombreDistribuidor, direccionDistribuidor, nitDistribuidor, telefonoDistribuidor, web) values
 			(nomDist, direDistri, ntDistri, teleDistri, wb); 
@@ -150,7 +150,7 @@ Create Procedure sp_buscarDistribuidores(in distriId int)
 Delimiter ;
              
 Delimiter $$
-Create Procedure sp_editarDistribuidores(in distriId int,in nomDist varchar(30),in direDistri varchar(30), ntDistri decimal(10, 2), teleDistri time, wb time)
+Create Procedure sp_editarDistribuidores(in distriId int,in nomDist varchar(30),in direDistri varchar(30), ntDistri varchar(16), teleDistri varchar(15), wb varchar(50))
 	Begin
 		Update Distribuidores
 			Set
@@ -305,6 +305,13 @@ Create Procedure sp_listarProducto()
             Productos.distribuidorId,
             Productos.categoriaProductosId
 				From Productos;
+                
+			/* 
+			P.productoId, P.nombreProducto, P.descripcionProducto, P.cantidadStock, P.precioVentaUnitario, P.precioVentaMayor, P.precioCompra, P.imagenProducto
+				D.distribuidorId, D.nombreDistribuidor,
+				C.categoriaProductosId, C.nombreCategoria From Productos P 
+                    
+			*/
 	End$$
 Delimiter ;
 
