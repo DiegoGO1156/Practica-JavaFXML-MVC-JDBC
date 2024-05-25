@@ -15,11 +15,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import org.diegogarcia.dao.Conexion;
 import org.diegogarcia.dto.ClienteDTO;
 import org.diegogarcia.model.Cliente;
 import org.diegogarcia.system.Main;
+import org.diegogarcia.utils.SuperKinalAlert;
 
 /**
  * FXML Controller class
@@ -77,7 +79,6 @@ public class MenuAgregarClienteController implements Initializable {
             conexion = Conexion.getInstance().obtenerConexion();
             String sql = "call sp_AgregarClientes(?,?,?,?,?);";
             statement = conexion.prepareStatement(sql);
-            //resultSet = statement.executeQuery();
             
             statement.setString(1, tfNombre.getText());
             statement.setString(2, tfApellido.getText());
@@ -90,9 +91,6 @@ public class MenuAgregarClienteController implements Initializable {
             System.out.println(e.getMessage());              
         }finally{
             try{
-                if(resultSet != null){
-                    resultSet.close();
-                }
                 if(statement != null){
                     statement.close();
                 }
@@ -108,7 +106,7 @@ public class MenuAgregarClienteController implements Initializable {
     public void editarCliente(){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_EditarCliente(?,?,?,?,?,?);";
+            String sql = "call sp_editarClientes(?,?,?,?,?,?);";
             statement = conexion.prepareStatement(sql);
             statement.setInt(1, Integer.parseInt(tfID.getText()));
             statement.setString(2, tfNombre.getText());
@@ -130,16 +128,48 @@ public class MenuAgregarClienteController implements Initializable {
         }
     }
     
-    @FXML
+
     public void handleButtonAction(ActionEvent event){
         if(event.getSource() == button_Aceptar){
             if(op == 1){
-              agregarCliente();
-              stage.menuClientesView();
+                
+                if(!tfNombre.getText().equals("") && !tfApellido.getText().equals("") && !tfDireccion.getText().equals("")){
+                    agregarCliente();
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(600);
+                    stage.menuClientesView();
+                }else {
+                    SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    if(tfNombre.getText().equals("")){
+                        tfNombre.requestFocus();
+                    } else if(tfApellido.getText().equals("")) {
+                        tfApellido.requestFocus();
+                    } else if(tfDireccion.getText().equals("")){
+                        tfDireccion.requestFocus();
+                    }
+                }
             }else if(op == 2){
-                editarCliente();
-                ClienteDTO.getClienteDTO().setCliente(null);
-                stage.menuClientesView();
+                
+               if(!tfNombre.getText().equals("") && !tfApellido.getText().equals("") && !tfDireccion.getText().equals("")){  
+                   
+                   if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(800).get() == ButtonType.OK){
+                       editarCliente();
+                       SuperKinalAlert.getInstance().mostrarAlertaInfo(500);
+                       ClienteDTO.getClienteDTO().setCliente(null);
+                       stage.menuClientesView();
+                   }else{
+                       stage.menuClientesView();
+                   }
+                }else{
+                   SuperKinalAlert.getInstance().mostrarAlertaInfo(400);
+                    if(tfNombre.getText().equals("")){
+                        tfNombre.requestFocus();
+                    } else if(tfApellido.getText().equals("")) {
+                        tfApellido.requestFocus();
+                    } else if(tfDireccion.getText().equals("")){
+                        tfDireccion.requestFocus();
+                    }
+               }
+                
             }
         } else if(event.getSource()== button_Cancelar){
             stage.menuClientesView();

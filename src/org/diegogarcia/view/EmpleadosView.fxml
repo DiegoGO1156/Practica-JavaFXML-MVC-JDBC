@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.diegogarcia.controller.EmpleadosController">
+   <children>
+      <ImageView fitHeight="656.0" fitWidth="1050.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/Empleados.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="button_Lupa" layoutX="40.0" layoutY="252.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="26.0" prefWidth="65.0" text="🔎" />
+      <Button fx:id="button_Editar" layoutX="408.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="39.0" prefWidth="102.0" text="Editar" />
+      <Button fx:id="button_Eliminar" layoutX="525.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="39.0" prefWidth="102.0" text="Eliminar" />
+      <TextField fx:id="tf_IDEmpleado" layoutX="118.0" layoutY="253.0" prefHeight="26.0" prefWidth="240.0" />
+      <TableView fx:id="tbl_Empleados" layoutX="55.0" layoutY="301.0" prefHeight="339.0" prefWidth="706.0">
+        <columns>
+          <TableColumn fx:id="col_ID" prefWidth="38.39999008178711" text="ID" />
+          <TableColumn fx:id="col_Nombre" prefWidth="104.0" text="Nombre" />
+            <TableColumn fx:id="col_Apellido" prefWidth="95.20002746582031" text="Apellido" />
+            <TableColumn fx:id="col_Sueldo" prefWidth="91.20001220703125" text="Sueldo" />
+            <TableColumn fx:id="col_HoraEntrada" prefWidth="100.0" text="Hora entrada" />
+            <TableColumn fx:id="col_HoraSalida" prefWidth="91.99993896484375" text="Hora Salida" />
+            <TableColumn fx:id="col_Cargo" prefWidth="85.60003662109375" text="Cargo" />
+            <TableColumn fx:id="col_Encargado" prefWidth="103.20001220703125" text="Encargado" />
+        </columns>
+      </TableView>
+      <Button fx:id="button_Agregar" layoutX="290.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="39.0" prefWidth="102.0" text="Agregar" />
+      <Button fx:id="button_Regresa" layoutX="936.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="39.0" prefWidth="102.0" text="Regresar" />
+   </children>
+</AnchorPane>

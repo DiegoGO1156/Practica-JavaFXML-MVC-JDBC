@@ -79,6 +79,10 @@ public class Cliente {
         this.nit = nit;
     }
     
+    @Override
+    public String toString () {
+        return "Id: " + clienteId +" | "+ nombre + " " + apellido;
+    }
     
     
 }

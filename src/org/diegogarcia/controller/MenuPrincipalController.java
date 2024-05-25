@@ -35,12 +35,28 @@ public class MenuPrincipalController implements Initializable{
     }
     
     @FXML
-    MenuItem Button_clientes;
+    MenuItem Button_clientes, Button_ticket, Button_Productos, Button_Cargos, Button_DetalleCompras, Button_promociones, Button_Distribuidores, Button_Categorias, Button_Empleados;
     
     @FXML
     public void handleButtonAction(ActionEvent event){
         if(event.getSource() == Button_clientes){
             stage.menuClientesView();
+        }else if(event.getSource() == Button_ticket){
+            stage.menuTicketView();
+        }else if(event.getSource() == Button_Productos){
+            stage.productoView();
+        }else if(event.getSource() == Button_Cargos){
+            stage.menuCargosView();
+        }else if(event.getSource() == Button_DetalleCompras){
+            stage.menuDetalleCompras();
+        }else if(event.getSource() == Button_promociones){
+            stage.menuPromociones();
+        }else if(event.getSource() == Button_Distribuidores){
+            stage.menuDistribuidorView();
+        }else if(event.getSource() == Button_Categorias){
+            stage.menuCategoriasView();
+        }else if(event.getSource() == Button_Empleados){
+            stage.menuEmpleadosView();
         }
     }
     
