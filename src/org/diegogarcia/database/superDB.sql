@@ -22,6 +22,8 @@ insert into Compras(fechaCompra, totalCompra) values
 insert into Empleados(nombreEmpleado, apellidoEmpleado, sueldo, horaEntrada, horaSalida, cargoId) values
 	('Diego', 'Garcia', 502, '12:30', '20:30', 1);
     
+insert into Compras(fechaCompra, totalCompra) values
+	('2023-05-12', 1483.25);
 /*insert into Productos(nombreProducto, descripcionProducto, precioVentaUnitario, precioVentaMayor, precioCompra, ) values
 	('2023-02-15', 156.25);
     */
@@ -29,4 +31,12 @@ insert into Empleados(nombreEmpleado, apellidoEmpleado, sueldo, horaEntrada, hor
   
   select * from Empleados;
   
+  select * from Usuario;
+  
+  select * from NivelesAcceso;
+  
+  select * from Cargos; 
+  
+call sp_listarProducto();
+call sp_buscarProducto();
   

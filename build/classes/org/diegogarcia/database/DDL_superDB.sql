@@ -139,3 +139,22 @@ Create Table DetalleFactura(
     Constraint FK_DetalleFactura_Productos Foreign Key DetalleFactura(productoId)
         References Productos(productoId)
 );
+
+Create table NivelesAcceso(
+	nivelesAccesoId int not null auto_increment,
+    nivelAcceso varchar(30) not null,
+    primary key PK_NivelesAcceso (nivelesAccesoId)
+);
+
+Create table Usuario(
+	usuarioId int not null auto_increment,
+	usuario varchar(100) not null,
+    contrasenia varchar(100) not null,
+    nivelesAccesoId int not null,
+    empleadoId int not null,
+    primary key PK_Usuario (usuarioId),
+    constraint FK_Usuario_NivelesAcceso foreign key (nivelesAccesoId)
+		references NivelesAcceso (nivelesAccesoId),
+	constraint FK_Usuario_Empleados foreign key (empleadoId)
+		references Empleados (empleadoId)
+);

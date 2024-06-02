@@ -59,7 +59,26 @@ public class SuperKinalAlert {
            alert.setHeaderText("El Registro Inexistente");
            alert.setContentText("El registro que intenta buscar no existe");
            alert.showAndWait();
+        }else if(code == 90){
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+           alert.setTitle("Usuario Inexistente o Incorrecto");
+           alert.setHeaderText("Usuario Inexistente o Incorrecto");
+           alert.setContentText("El usuario que intenta iniciar no existe o es incorrecto!");
+           alert.showAndWait();
+        }else if(code == 80){
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+           alert.setTitle("Contraseña Incorrecta");
+           alert.setHeaderText("Contraseña Incorrecta");
+           alert.setContentText("La contraseña que ingreso es incorrecta!!");
+           alert.showAndWait();
         }
+    }
+    
+    public void alertBienvenida(String usuario){
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+           alert.setTitle("BIENVENIDO!");
+           alert.setHeaderText("BIENVENIDO " +  usuario);
+           alert.showAndWait();
     }
     
     public Optional <ButtonType> mostrarAlertaConfirmacion(int code){

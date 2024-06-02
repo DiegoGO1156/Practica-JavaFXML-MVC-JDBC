@@ -478,7 +478,7 @@ Create Procedure sp_listarEmpleados()
 	Begin
 		Select E.empleadoId, E.nombreEmpleado, E.apellidoEmpleado, E.sueldo, E.horaentrada, E.horaSalida,
         Concat('ID: ', C.cargoId , ' | ' , 'Cargo: ', C.nombreCargo) AS 'cargo',
-        CONCAT('ID: ', E2.encargadoId, ' | ' , 'Nombre: ' ,E2.nombreEmpleado) AS 'Encargado' from Empleados E
+        CONCAT('ID: ', E2.empleadoId, ' | ' , 'Nombre: ' ,E2.nombreEmpleado) AS 'Encargado' from Empleados E
 		JOIN Cargos C ON E.cargoId = C.cargoId
 		Left JOIN Empleados E2 ON E.encargadoId = E2.empleadoId;
 	End$$
@@ -533,13 +533,12 @@ Delimiter $$
 Create Procedure sp_listarFactura()
 	Begin
 		select
-			Facturas.facturaId,
-            Facturas.fecha,
-            Facturas.hora,
-            Facturas.clienteId,
-            Facturas.empleadoId,
-            Facturas.total
-				From Facturas;
+                F.facturaId, F.fecha, F.hora, F.total,
+                Concat('ID: ', C.clienteId, ' | ', 'Nombre: ',C.nombre) AS 'Cliente', 
+                Concat('ID: ', E.empleadoId, ' | ', 'Nombre: ', E.nombreEmpleado) AS 'Empleado' From Facturas F
+                Join Clientes C on F.clienteId = C.clienteId
+                Join Empleados E on F.empleadoId = E.empleadoId;
+                
 	End $$
 Delimiter ;
 
@@ -648,10 +647,11 @@ Delimiter $$
 Create Procedure sp_ListarDetFacturas()
 	Begin
 		Select
-			DetalleFactura.detalleFacturaId,
-			DetalleFactura.facturaId,
-            DetalleFactura.productoId
-				From DetalleFactura;
+			DT.detalleFacturaId, 
+			Concat('ID: ', F.facturaId, ' | ', 'Fecha: ', F.fecha) AS 'Factura',
+			Concat('ID: ', P.productoId, ' | ', 'Nombre: ', P.nombreProducto) AS 'Producto' from DetalleFactura DT
+			Join Productos P On DT.productoId  = P.productoId
+			Join Facturas F On DT.facturaId = F.facturaId;
 	End$$
 Delimiter ;
 
@@ -695,18 +695,7 @@ Create Procedure sp_asignarTotalFactura(in factId int, in totalFact decimal(10,2
 				Where facturaId = factId;
 	End $$
 Delimiter ;
-/*
-Delimiter $$
-Create trigger tg_totalFactura
-After insert on detalleFactura
-For each row
-	Begin
-		Declare totalFact decimal(10,2);
-     
-		set totalFact = FN_totalFact(new.facturaId);
-	End$$
-Delimiter ;
-*/
+
 -- %%%%%%%%%%%%%%%%%%%%%%%% Stok Asignar %%%%%%%%%%%%%%%%%%%%%%%% --
 
 Delimiter $$
@@ -718,17 +707,6 @@ Create Procedure sp_asignarDeStok(in proId int, in totalStok int)
 	End $$
 Delimiter ;
 
-/*Delimiter $$
-Create trigger tg_totalStok
-After insert on detalleFactura
-For each row
-	Begin
-		Declare totalStok int;
-     
-		Set totalStok = FN_desStok(new.productoId);
-	End$$
-Delimiter ;
-*/
 
 -- %%%%%%%%%%%%%%%%%%%%%%%% Empleado Asignar Encargado %%%%%%%%%%%%%%%%%%%%%%%% --
 
@@ -742,6 +720,39 @@ Create Procedure sp_AsignarEncargado(in empId int,in encId int)
 	End$$
 Delimiter ;
 
-/*Select TS.ticketSoporteId, TS.descripcionTicket, TS.estatus,
-				Cl.clienteId , Cl.nombre, Cl.apellido from TicketSoporte TS
-            Join Clientes Cl on TS.clienteId = Cl.clienteId; */
+-- %%%%%%%%%%%%%%%%%%%%%%%% USUARIOS %%%%%%%%%%%%%%%%%%%%%%%% --
+
+Delimiter $$
+Create procedure sp_CrearUsuario(in us Varchar(100), cont Varchar(100), in nivAccesId int, in empId int)
+Begin
+	Insert into Usuario(usuario, contrasenia, nivelesAccesoId, empleadoId)
+		Values(us, cont, nivAccesId, empId);
+
+END $$
+Delimiter ;
+
+Delimiter $$
+Create procedure sp_BuscarUsuario(us Varchar(100))
+Begin 
+	Select 
+		Usuario.usuarioId,
+        Usuario.usuario,
+        Usuario.contrasenia,
+        Usuario.nivelesAccesoId,
+        Usuario.empleadoId
+			From Usuario
+				Where usuario = us;
+END $$
+Delimiter ;
+
+-- %%%%%%%%%%%%%%%%%%%%%%%% NIVEL ACCESO %%%%%%%%%%%%%%%%%%%%%%%% --
+
+Delimiter $$
+Create procedure sp_ListarNivelAcceso()
+Begin 
+	Select 
+    NivelesAcceso.nivelesAccesoId,
+    NivelesAcceso.nivelAcceso
+		from NivelesAcceso;
+END $$
+Delimiter ;

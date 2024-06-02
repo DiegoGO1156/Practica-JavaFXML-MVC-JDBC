@@ -18,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.diegogarcia.controller.DetalleCompraController;
 import org.diegogarcia.controller.EmpleadosController;
+import org.diegogarcia.controller.FacturasController;
 import org.diegogarcia.controller.MenuAgregarClienteController;
 import org.diegogarcia.controller.FormCargoController;
 import org.diegogarcia.controller.FormCategoriaController;
@@ -25,7 +26,9 @@ import org.diegogarcia.controller.FormComprasController;
 import org.diegogarcia.controller.FormDetalleCompraController;
 import org.diegogarcia.controller.FormEmpleadosController;
 import org.diegogarcia.controller.FormPromocionesController;
+import org.diegogarcia.controller.FormUsuariosController;
 import org.diegogarcia.controller.FromDistribuidoresController;
+import org.diegogarcia.controller.LoginController;
 import org.diegogarcia.controller.MenuCargoController;
 import org.diegogarcia.controller.MenuCategoriaProductosController;
 import org.diegogarcia.controller.MenuPrincipalController;
@@ -50,8 +53,9 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         this.stage = stage;
         stage.setTitle("Super Kinal App");
-        menuPrincipalView();
-        //menuClientesView();
+        //menuPrincipalView();
+        //loginView();
+        formUsuariosView();
         stage.show();
     }
     
@@ -245,6 +249,35 @@ public class Main extends Application {
         }
     }
     
+    public void menuFacturasView(){
+        try{
+            FacturasController menuFacturasView = (FacturasController) switchScene("FacturasView.fxml", 1500, 900);
+            menuFacturasView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void formUsuariosView(){
+        try{
+            FormUsuariosController formUsuariosView = (FormUsuariosController) switchScene("FormUsuariosView.fxml", 900, 731);
+            formUsuariosView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public void loginView(){
+        try{
+            LoginController loginView = (LoginController) switchScene("LoginView.fxml", 700, 900);
+            loginView.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
     
     /**
      * @param args the command line arguments
