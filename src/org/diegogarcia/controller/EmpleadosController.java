@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.diegogarcia.dao.Conexion;
+import org.diegogarcia.dto.EmpleadosDto;
 import org.diegogarcia.model.Empleados;
 import org.diegogarcia.system.Main;
 
@@ -50,7 +51,7 @@ public class EmpleadosController implements Initializable {
     private Main stage;
     
     @FXML
-    Button button_Agregar, button_Editar, button_Eliminar, button_Regresa, button_Lupa;
+    Button button_Agregar, button_Editar, button_Eliminar, button_Regresa, button_Lupa, button_AsignarEncargado;
     
     @FXML
     TextField tf_IDEmpleado;
@@ -226,6 +227,9 @@ public class EmpleadosController implements Initializable {
             }
         }else if(event.getSource() == button_Regresa){
             stage.menuPrincipalView();
+        }else if(event.getSource() == button_AsignarEncargado){
+           EmpleadosDto.getEmpleadosDto().setEmpleados((Empleados)tbl_Empleados.getSelectionModel().getSelectedItem());
+            stage.formAsignarEncargado();
         }
     }
 }

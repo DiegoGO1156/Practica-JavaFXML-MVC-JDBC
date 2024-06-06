@@ -31,5 +31,6 @@
       <Button fx:id="button_VaciarProd" layoutX="854.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="70.0" prefWidth="118.0" text="Vaciar" />
       <ComboBox fx:id="cmb_DIstribuidor" layoutX="184.0" layoutY="726.0" prefHeight="38.0" prefWidth="322.0" />
       <ComboBox fx:id="cmb_Categoría" layoutX="639.0" layoutY="726.0" prefHeight="38.0" prefWidth="322.0" />
+      <Button fx:id="button_registro" layoutX="682.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="70.0" prefWidth="138.0" text="Registro" />
    </children>
 </AnchorPane>

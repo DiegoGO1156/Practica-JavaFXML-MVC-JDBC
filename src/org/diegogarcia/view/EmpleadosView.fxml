@@ -33,5 +33,6 @@
       </TableView>
       <Button fx:id="button_Agregar" layoutX="290.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="39.0" prefWidth="102.0" text="Agregar" />
       <Button fx:id="button_Regresa" layoutX="936.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="39.0" prefWidth="102.0" text="Regresar" />
+      <Button fx:id="button_AsignarEncargado" layoutX="655.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="47.0" prefWidth="95.0" text="Asignar Encargado" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

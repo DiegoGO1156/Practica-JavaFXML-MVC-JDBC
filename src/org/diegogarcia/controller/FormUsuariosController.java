@@ -79,6 +79,7 @@ public class FormUsuariosController implements Initializable {
             statement.setString(2, PasswordUtils.getInstance().encryptedPassword(tf_PassWord.getText()));
             statement.setInt(3, ((NivelAcceso)cmb_NivelAcceso.getSelectionModel().getSelectedItem()).getNivelesAccesoId());
             statement.setInt(4, ((Empleados)cmb_Empleado.getSelectionModel().getSelectedItem()).getEmpleadoId());
+            statement.execute();
             
         }catch(SQLException e){
             e.printStackTrace();

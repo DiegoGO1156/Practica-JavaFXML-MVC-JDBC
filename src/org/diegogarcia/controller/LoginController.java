@@ -121,10 +121,10 @@ public class LoginController implements Initializable {
                             stage.menuPrincipalView();
                         }
                     }else{
-                        SuperKinalAlert.getInstance().mostrarAlertaInfo(80);
+                        SuperKinalAlert.getInstance().mostrarAlertaInfo(800);
                     }
                 }else{
-                  SuperKinalAlert.getInstance().mostrarAlertaInfo(90);
+                  SuperKinalAlert.getInstance().mostrarAlertaInfo(900);
                 }
             }else{
                 stage.menuPrincipalView();

@@ -26,6 +26,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.diegogarcia.dao.Conexion;
 import org.diegogarcia.dto.ClienteDTO;
 import org.diegogarcia.model.Cliente;
+import org.diegogarcia.report.GenerarReport;
 import org.diegogarcia.system.Main;
 import org.diegogarcia.utils.SuperKinalAlert;
 /**
@@ -48,7 +49,7 @@ public class MenuClientesController implements Initializable {
     //Cliente cliente = new Cliente();
     
     @FXML
-    Button button_regresar, button_eliminar, button_editar,button_agregar, button_Eliminar, button_lupa;
+    Button button_regresar, button_eliminar, button_editar,button_agregar, button_Eliminar, button_lupa, button_reportes;
     
     @FXML
     TableView tblClientes;
@@ -218,6 +219,8 @@ public class MenuClientesController implements Initializable {
                 op = 3;
                 cargarDatos();
             }
+        }else if(event.getSource() == button_reportes){
+            GenerarReport.getInstance().generarRegClientes();
         }
         
     }

@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.diegogarcia.controller.AsignarEncargadoController;
 import org.diegogarcia.controller.DetalleCompraController;
 import org.diegogarcia.controller.EmpleadosController;
 import org.diegogarcia.controller.FacturasController;
@@ -54,8 +55,8 @@ public class Main extends Application {
         this.stage = stage;
         stage.setTitle("Super Kinal App");
         //menuPrincipalView();
-        //loginView();
-        formUsuariosView();
+        loginView();
+        //formUsuariosView();
         stage.show();
     }
     
@@ -236,6 +237,16 @@ public class Main extends Application {
             formEmpleadosView.setStage(this);
         }catch(Exception e){
             System.out.println(e.getMessage());
+        }
+    }
+    
+    public void formAsignarEncargado(){
+        try{
+            AsignarEncargadoController formAsignarEncargado = (AsignarEncargadoController) switchScene("AsignarEncargadoView.fxml", 800, 800);
+            formAsignarEncargado.setStage(this);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
     

@@ -59,13 +59,13 @@ public class SuperKinalAlert {
            alert.setHeaderText("El Registro Inexistente");
            alert.setContentText("El registro que intenta buscar no existe");
            alert.showAndWait();
-        }else if(code == 90){
+        }else if(code == 900){
            Alert alert = new Alert(Alert.AlertType.WARNING);
            alert.setTitle("Usuario Inexistente o Incorrecto");
            alert.setHeaderText("Usuario Inexistente o Incorrecto");
            alert.setContentText("El usuario que intenta iniciar no existe o es incorrecto!");
            alert.showAndWait();
-        }else if(code == 80){
+        }else if(code == 800){
            Alert alert = new Alert(Alert.AlertType.WARNING);
            alert.setTitle("Contraseña Incorrecta");
            alert.setHeaderText("Contraseña Incorrecta");
@@ -75,7 +75,7 @@ public class SuperKinalAlert {
     }
     
     public void alertBienvenida(String usuario){
-           Alert alert = new Alert(Alert.AlertType.WARNING);
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
            alert.setTitle("BIENVENIDO!");
            alert.setHeaderText("BIENVENIDO " +  usuario);
            alert.showAndWait();
@@ -94,6 +94,12 @@ public class SuperKinalAlert {
             alert.setTitle("Edicion Registro");
             alert.setHeaderText("Edicion Registro");
             alert.setContentText("¿Desea confirmar la Edicion?");
+            action = alert.showAndWait();
+        }else if(code == 900){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Asignación de Encargado");
+            alert.setHeaderText("Asignación de Encargado");
+            alert.setContentText("¿Desea confirmar el Encargado Asignado?");
             action = alert.showAndWait();
         }
         return action;

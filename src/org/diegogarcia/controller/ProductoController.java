@@ -29,6 +29,7 @@ import org.diegogarcia.dao.Conexion;
 import org.diegogarcia.model.CategoriaProducto;
 import org.diegogarcia.model.Distribuidores;
 import org.diegogarcia.model.Producto;
+import org.diegogarcia.report.GenerarReport;
 import org.diegogarcia.system.Main;
 import org.diegogarcia.utils.SuperKinalAlert;
 
@@ -65,7 +66,7 @@ public class ProductoController implements Initializable {
     
     
     @FXML
-    Button button_RegresarMenu, button_VaciarProd, button_AgProd, button_editProd, button_eliminarProd, button_buscarProd;
+    Button button_RegresarMenu, button_VaciarProd, button_AgProd, button_editProd, button_eliminarProd, button_buscarProd, button_registro;
     
     @FXML
     TextField tf_ProdId, tf_NomProd, tf_CantStock, tf_ventUni, tf_ventMay, tf_preComp;
@@ -355,6 +356,8 @@ public class ProductoController implements Initializable {
                 }else if(producto == null){
                     SuperKinalAlert.getInstance().mostrarAlertaInfo(100); 
                 }
+            }else if(event.getSource() == button_registro){
+                GenerarReport.getInstance().generarProductos();
             }
         }catch(SQLException e){
             e.printStackTrace();
